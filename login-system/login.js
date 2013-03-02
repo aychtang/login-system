@@ -3,15 +3,15 @@ var trimInput = function(val) {
 };
 
 var checkPassword = function(password) {
-  if(password.length >= 6){return true};
+  if(password.length >= 6) {return true};
   return false;
-}
+};
 
 if (Meteor.isClient) {
 
   Meteor.Router.add({
-    '/yo': 'yo',
-    '/': '/',
+    '/': 'home',
+    '/signin': 'signin',
     '*': 'not_found'
   });
 
@@ -22,39 +22,58 @@ if (Meteor.isClient) {
       } else if (Meteor.user()) {
         return page;
       } else {
-        return 'signin';
+        return 'login';
       }
     }
   });
 
-  Meteor.Router.filter('checkLoggedIn');
+  Meteor.Router.filter('checkLoggedIn', {only: 'home'});
 
   Template.signin.events = {
-    'click input.submit' : function (e, t) {
+    'click input.submit' : function (event, target) {
 
-      var user = t.find('.username').value;
-      var password = t.find('.password').value;
-      var email = trimInput(t.find('.email').value);
+      var user = target.find('.username').value;
       var userOptions = {
         username : user,
-        password : password,
-        email : email,
-        profile : {
-          name: 'howard',
-          age: 12
-        }
-      }
-      console.log(email);
-      e.preventDefault();
+        password : target.find('.password').value,
+        email : trimInput(target.find('.email').value),
+          profile : {
+            name: target.find('.name').value
+          }
+      };
 
       if(checkPassword){
         Accounts.createUser(userOptions, function(err){
           if(err){throw err};
-          console.log(user);
           return user;
         });
       }
+      event.preventDefault();
+      Meteor.Router.to('/');
+    }
+  };
+
+  Template.login.events = {
+    'click input.submit' : function (event, target) {
+      Meteor.loginWithPassword(target.find('.username').value, target.find('.password').value);
     }
   }
 
+  Template.home.events = {
+    'click .logout' : function (event) {
+      Meteor.logout();
+      event.preventDefault();
+    },
+
+    'click input' : function (event) {
+      console.log(event);
+    }
+  }
+
+  var remove = function(){
+    Meteor.users.allow(remove);
+    Meteor.users.remove({});
+  };
 }
+
+

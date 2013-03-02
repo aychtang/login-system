@@ -1,5 +1,5 @@
 <head>
-  <title>rooting</title>
+  <title>shazam</title>
 </head>
 
 <body>
@@ -8,16 +8,29 @@
   </div>
 </body>
 
-<template name="/">
+<template name="home">
   <h1>{{currentUser.username}}, say yo world!</h1>
-</template>
-
-<template name="yo">
-	<h1>yo!</h1>
+  <div class="profile">
+  	<p>Your name is {{currentUser.profile.name}}.</p>
+  	<p>Your email is {{currentUser.emails.0.address}}</p>
+  	<input type="text" class="age"/>
+  	<input type="button" value="submit">
+  	<a class="logout">Sign out</a>
+  </div>
 </template>
 
 <template name="not_found">
-	<h1>404 yo!</h1>
+	<h1>404</h1>
+	<a href="/">Go back home.</a>
+</template>
+
+<template name="login">
+	<div class="login">
+		<input type="text" class="username"/ placeholder="username">
+		<input type="password" class="password" placeholder="password"/>
+		<input type="submit" class="submit" value="login"/>
+		<a href="/signin">Click here to sign up</a>
+	</div>
 </template>
 
 <template name="signin">
@@ -25,6 +38,8 @@
 		<h1>Sign up yo.</h1>
 		<label>Username</label>
 		<input type="text" class="username" placeholder="username"/>
+		<label>True Name</label>
+		<input type="text" class="name" placeholder="true name"/>
 		<label>Password</label>
 		<input type="password" class="password" placeholder="password"/>
 		<label>Email address</label>
