@@ -1,0 +1,38 @@
+
+/* CSS declarations go here */
+
+h1 {
+	text-align: center;
+}
+
+body {
+	height: 1000px;
+}
+
+.contain {
+	width: 960px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.signup {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.signup label {
+	display: none;
+}
+
+.signup input {
+	display: block;
+	width: 200px;
+	margin: 0 auto;
+}
+
+input.submit {
+	width: 60px;
+	background-color: green;
+	color: white;
+	margin: 10px 0;
+}
